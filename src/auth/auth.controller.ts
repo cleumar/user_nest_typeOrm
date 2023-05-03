@@ -1,5 +1,16 @@
-import { BadRequestException, Body, Controller, Post, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from "@nestjs/common";
-
+import { 
+    BadRequestException, 
+    Body, 
+    Controller, 
+    FileTypeValidator,
+    MaxFileSizeValidator, 
+    ParseFilePipe, 
+    Post, 
+    UploadedFile, 
+    UploadedFiles, 
+    UseGuards, 
+    UseInterceptors 
+} from "@nestjs/common";
 
 import { AuthLoginDto } from "./dto/auth-login-dto";
 import { AuthRegisterDto } from "./dto/auth-register-dto";
@@ -53,7 +64,16 @@ constructor(
     @UseInterceptors(FileInterceptor('file'))
     @UseGuards(AuthGuard)
     @Post('photo')
-    async uploadPhoto (@User() user, @UploadedFile()  photo: Express.Multer.File) {
+    async uploadPhoto (
+        @User() user,
+        @UploadedFile(
+            new ParseFilePipe({
+              validators: [
+                new FileTypeValidator({ fileType: "image/jpeg" }),
+                new MaxFileSizeValidator({ maxSize: 1024 * 50 }),
+              ],
+            }),
+          )  photo: Express.Multer.File) {
 
         const path = join(__dirname,'..', '..','storage', 'photos', `photo-${user.id}.jpeg`)
         try {
