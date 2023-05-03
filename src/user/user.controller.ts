@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Patch, Post, Put, UseGuards, UseInterceptors } from "@nestjs/common";
-import { CreateUserDto } from "./dto/create-user-dto";
-import { UpdatePutUserDto } from "./dto/update-put-user-dto";
+import { CreateUserDTO } from "./dto/create-user-dto";
+import { UpdatePutUserDTO } from "./dto/update-put-user-dto";
 import { UserService } from "./user.service";
-import { UpdatePatchUserDto } from "./dto/update-patch-user-dto";
+import { UpdatePatchUserDTO } from "./dto/update-patch-user-dto";
 import { ParamId } from "src/decorators/param.id.decorator";
 import { Roles } from "src/decorators/roles.decorator";
 import { Role } from "src/enums/roles.enum";
@@ -20,7 +20,7 @@ constructor(private userService: UserService){}
 
     @Roles(Role.Admin)
     @Post()
-    async create (@Body() data: CreateUserDto){
+    async create (@Body() data: CreateUserDTO){
         return await this.userService.create(data)
     }
 
@@ -38,13 +38,13 @@ constructor(private userService: UserService){}
 
     @Roles(Role.Admin)
     @Put(':id')
-    async update (@Body() data: UpdatePutUserDto, @ParamId()  id:number){
+    async update (@Body() data: UpdatePutUserDTO, @ParamId()  id:number){
         return await this.userService.update(id,data)
     }
 
     @Roles(Role.Admin)
     @Patch(':id')
-    async updatePartial (@Body() data: UpdatePatchUserDto, @ParamId() id: number){
+    async updatePartial (@Body() data: UpdatePatchUserDTO, @ParamId() id: number){
         return await this.userService.updatePartial(id,data)
     }
 
