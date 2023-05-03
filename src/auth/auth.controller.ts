@@ -50,7 +50,7 @@ constructor(
     }
 
 
-    @Post()
+    @Post('reset')
     async reset (@Body() { password, token}: AuthResetDto){
         return await this.authService.reset(password, token)
     }
