@@ -1,6 +1,5 @@
-import { Role } from "../../../src/enums/roles.enum";
-import { UserEntity } from "../../../src/user/entity/user.entity";
-
+import { Role } from '../../../src/enums/roles.enum'
+import { UserEntity } from '../../../src/user/entity/user.entity'
 
 export const userEntityList: UserEntity[] = [
   {
@@ -11,7 +10,7 @@ export const userEntityList: UserEntity[] = [
     password: '$2b$10$KTCMumuAvsZcxgEXCA4.x.sqeqtrWXmB7ptFGkF.f32XW3OE3Awb6',
     role: Role.Admin,
     createdAt: new Date(),
-    updatedAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Glaucio Daniel',
@@ -21,7 +20,7 @@ export const userEntityList: UserEntity[] = [
     password: '$2b$10$KTCMumuAvsZcxgEXCA4.x.sqeqtrWXmB7ptFGkF.f32XW3OE3Awb6',
     role: Role.Admin,
     createdAt: new Date(),
-    updatedAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Djalma Sindaux',
@@ -31,6 +30,6 @@ export const userEntityList: UserEntity[] = [
     password: '$2b$10$KTCMumuAvsZcxgEXCA4.x.sqeqtrWXmB7ptFGkF.f32XW3OE3Awb6',
     role: Role.Admin,
     createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
+    updatedAt: new Date()
+  }
+]

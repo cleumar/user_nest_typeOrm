@@ -1,24 +1,24 @@
-import { Module, forwardRef } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { APP_GUARD } from '@nestjs/core';
-import { ConfigModule } from '@nestjs/config';
-import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
-import { MailerModule } from '@nestjs-modules/mailer';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './user/entity/user.entity';
+import { Module, forwardRef } from '@nestjs/common'
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
+import { UserModule } from './user/user.module'
+import { AuthModule } from './auth/auth.module'
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
+import { APP_GUARD } from '@nestjs/core'
+import { ConfigModule } from '@nestjs/config'
+import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter'
+import { MailerModule } from '@nestjs-modules/mailer'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { UserEntity } from './user/entity/user.entity'
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     ThrottlerModule.forRoot({
       ttl: 60,
-      limit: 10,
+      limit: 10
     }),
-    forwardRef(() =>UserModule), 
+    forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
     MailerModule.forRoot({
       transport: {
@@ -26,29 +26,30 @@ import { UserEntity } from './user/entity/user.entity';
         port: 587,
         auth: {
           user: 'haley.larson36@ethereal.email',
-          pass: 'JYexVuGyTZZgrMD24q',
-        },
+          pass: 'JYexVuGyTZZgrMD24q'
+        }
       },
       defaults: {
-        from: '"Hcode" <haley.larson36@ethereal.email>',
+        from: '"Hcode" <haley.larson36@ethereal.email>'
       },
       template: {
+        // eslint-disable-next-line n/no-path-concat
         dir: __dirname + '/templates',
         adapter: new PugAdapter(),
         options: {
-          strict: true,
-        },
-      },
+          strict: true
+        }
+      }
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host:process.env.DB_HOST,
+      host: process.env.DB_HOST,
       port: Number(process.env.DB_HOST),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       entities: [UserEntity],
-      synchronize: process.env.ENV === "devel"
+      synchronize: process.env.ENV === 'devel'
     })
   ],
 
@@ -57,9 +58,9 @@ import { UserEntity } from './user/entity/user.entity';
     AppService,
     {
       provide: APP_GUARD,
-      useClass: ThrottlerGuard,
-    },
+      useClass: ThrottlerGuard
+    }
   ],
   exports: [AppService]
 })
-export class AppModule {}
+export class AppModule { }

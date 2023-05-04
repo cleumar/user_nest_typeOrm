@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "eamodio.gitlens",
+      "esbenp.prettier-vscode",
+      "vscode-icons-team.vscode-icons",
+      "rohit-gohri.format-code-action"
+    ]
+  }
