@@ -2,7 +2,10 @@ FROM node:18-alpine
 
 WORKDIR /app
 COPY package*.json package-lock.json tsconfig.json ./
-COPY node_modules ./node_modules
+RUN npm cache clean --force && rm -rf node_modules && npm install
+
 COPY dist ./dist
 
-CMD [ "node", "dist/main.js" ]
+EXPOSE 3000
+
+CMD [ "node", "dist/src/main.js" ]

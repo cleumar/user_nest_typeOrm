@@ -3,32 +3,47 @@ services:
   backend:
     container_name: api_backend
     restart: always
+
     environment:
-      MYSQL_HOST: db
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_DATABASE: api
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      DB_DATABASE: api
+
+    links:
+      - db
+    networks:
+      - mysql_network
+
     build: .
     volumes:
       - ./src:/app/src
     ports:
-      - '3001:3001'
+      - '3000:3000'
+    expose:
+      - 3000
     depends_on:
       - db
-    command: npm run dev
+
   db:
     image: mysql:latest
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_PASSWORD: root
       MYSQL_DATABASE: api
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
     ports:
-      - 3301:3306
-    expose:
-      - 3306
-    cap_add:
-      - SYS_NICE
+      - '3306:3306'
+    networks:
+      - mysql_network
+
     volumes:
       - db-data:/var/lib/mysql
 volumes:
   db-data:
+
+networks:
+  mysql_network:
+    driver: local
